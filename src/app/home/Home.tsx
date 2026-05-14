@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
       <components.Header
         showBasket={true}
         showBurger={true}
-        title="Yummer"
+        title="Amour Èternel"
         showUser={true}
         titleStyle={{fontWeight: 500}}
       />

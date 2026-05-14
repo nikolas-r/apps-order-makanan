@@ -4,11 +4,11 @@ import type {Metadata, Viewport} from 'next';
 import StoreProvider from '@/app/StoreProvider';
 import {BurgerContacts} from '@/components/BurgerContacts';
 
-const APP_NAME = 'Yummer';
-const APP_DEFAULT_TITLE = 'Yummer- PWA App';
-const APP_TITLE_TEMPLATE = '%s - Yummer';
+const APP_NAME = 'amour____eternel';
+const APP_DEFAULT_TITLE = 'Amour Èternel | The Classic Brownies & Butter Cookies';
+const APP_TITLE_TEMPLATE = '%s - amour____eternel';
 const APP_DESCRIPTION =
-  'Yummer is a Progressive Web App designed to provide a seamless user experience across devices.';
+  'Amour Èternel | The Classic Brownies & Butter Cookies';
 
 import 'swiper/css';
 import '../css/reset.css';

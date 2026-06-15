@@ -15,8 +15,6 @@ export const Search: React.FC = () => {
 
   const { dishes } = hooks.useGetDishes();
 
-  console.warn(dishes)
-
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const check = () =>

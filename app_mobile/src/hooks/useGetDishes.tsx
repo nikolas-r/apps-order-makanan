@@ -3,8 +3,6 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 
-import {URLS} from '@/config';
-
 export const useGetDishes = () => {
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,13 +10,13 @@ export const useGetDishes = () => {
   const getDishes = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(URLS.GET_DISHES);
+      const response = await axios.get('/api/routes');
 
-      if (!response.data) {
+      if (!response.data || !response.data.success) {
         throw new Error('No data in response');
       }
 
-      const dishes = response.data.dishes || response.data || [];
+      const dishes = response.data.data || [];
       setDishes(dishes);
     } catch (error) {
       console.error('API request failed:', error);

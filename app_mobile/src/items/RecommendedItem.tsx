@@ -3,19 +3,19 @@
 import React from 'react';
 import Link from 'next/link';
 
-import {svg} from '@/assets/svg';
-import {DishType} from '@/types';
-import {constants} from '@/constants';
-import {components} from '@/components';
-import {useAppSelector} from '@/lib/store';
-import {useAppDispatch} from '@/lib/store';
-import {cartActions} from '@/lib/cartSlice';
+import { svg } from '@/assets/svg';
+import { DishType } from '@/types';
+import { constants } from '@/constants';
+import { components } from '@/components';
+import { useAppSelector } from '@/lib/store';
+import { useAppDispatch } from '@/lib/store';
+import { cartActions } from '@/lib/cartSlice';
 
 type Props = {
   dish: DishType;
 };
 
-export const RecommendedItem: React.FC<Props> = ({dish}) => {
+export const RecommendedItem: React.FC<Props> = ({ dish }) => {
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart.list);
   const inCart = cart.find((item) => item.id === dish?.id);
@@ -49,7 +49,7 @@ export const RecommendedItem: React.FC<Props> = ({dish}) => {
         }}
       >
         <img
-          src={dish.image}
+          src={dish.img}
           alt={dish.name}
           style={{
             width: 124,
@@ -57,10 +57,6 @@ export const RecommendedItem: React.FC<Props> = ({dish}) => {
             borderRadius: '5px 0 0 5px',
             objectFit: 'cover',
           }}
-        />
-        <components.DishRating
-          rating={dish.rating}
-          containerStyle={{position: 'absolute', top: 0, left: 0, zIndex: 1}}
         />
       </Link>
 
@@ -101,7 +97,7 @@ export const RecommendedItem: React.FC<Props> = ({dish}) => {
             color: constants.colors.textColor,
           }}
         >
-          ${dish.price.toFixed(2)}
+          {dish.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
         </p>
         <div
           style={{
@@ -110,8 +106,6 @@ export const RecommendedItem: React.FC<Props> = ({dish}) => {
             gap: 4,
           }}
         >
-          <components.Rating rating={3} />
-          <span style={{fontSize: 12}}>({dish.rating})</span>
         </div>
         <button
           style={{

@@ -65,7 +65,7 @@ export const Order: React.FC = () => {
               color: '#E94F08',
             }}
           >
-            ${total.toFixed(2)}
+            {total.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
           </span>
         </div>
         <components.Button

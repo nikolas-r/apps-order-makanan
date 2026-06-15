@@ -45,7 +45,7 @@ export const ShopItem: React.FC<Props> = ({dish}) => {
         }}
       >
         <img
-          src={dish.image}
+          src={dish.img}
           alt={dish.name}
           style={{
             width: '100%',
@@ -78,7 +78,7 @@ export const ShopItem: React.FC<Props> = ({dish}) => {
               color: constants.colors.textColor,
             }}
           >
-            ${dish.price.toFixed(2)}
+            ${dish.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
           </span>
           <button
             style={{

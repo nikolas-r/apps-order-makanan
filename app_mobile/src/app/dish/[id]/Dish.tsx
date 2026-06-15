@@ -17,7 +17,7 @@ type Props = {
 
 export const Dish: React.FC<Props> = ({id}) => {
   const dispatch = useAppDispatch();
-  const {dish, isLoading} = hooks.useGetDish(Number(id));
+  const {dish, isLoading} = hooks.useGetDish(id);
   const wishlist = useAppSelector((state) => state.wishlist.list);
   const cart = useAppSelector((state) => state.cart.list);
   hooks.useThemeColor('#FFF');
@@ -59,7 +59,7 @@ export const Dish: React.FC<Props> = ({id}) => {
         }}
       >
         <img
-          src={dish?.image}
+          src={dish?.img}
           alt={dish?.name}
           style={{
             width: '100%',
@@ -125,7 +125,7 @@ export const Dish: React.FC<Props> = ({id}) => {
         }}
       >
         <span style={{fontSize: 24, color: '#FE724E', fontWeight: 700}}>
-          ${dish?.price.toFixed(2)}{' '}
+          {dish?.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}{' '}
           <span
             style={{
               fontSize: 14,

@@ -63,14 +63,14 @@ export const SignUp: React.FC = () => {
         <div style={{...constants.flex.flexColumn, gap: 20}}>
           <components.Input
             label="Name"
-            placeholder="Kristin Watson"
+            placeholder="Nikolas Reinald"
             value={form.name}
             onClickAction={() => handleChangeField('name', 'name')}
             isValid={form.name.length > 0}
           />
           <components.Input
             label="Email"
-            placeholder="kristinwatson@mail.com"
+            placeholder="nikolasreinald@gmail.com"
             value={form.email}
             onClickAction={() => handleChangeField('email', 'email')}
           />

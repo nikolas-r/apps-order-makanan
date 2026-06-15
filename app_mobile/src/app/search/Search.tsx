@@ -1,24 +1,30 @@
 'use client';
 
 import React from 'react';
-import 'swiper/swiper-bundle.css';
-import {useRouter} from 'next/navigation';
-import {Swiper, SwiperSlide} from 'swiper/react';
+import { useEffect, useRef, useState } from 'react';
 
-import {hooks} from '@/hooks';
-import {items} from '@/items';
-import {DishType} from '@/types';
-import {constants} from '@/constants';
-import {components} from '@/components';
+import { items } from '@/items';
+import { hooks } from '@/hooks';
+import { constants } from '@/constants';
+import { components } from '@/components';
+import { DishType } from '@/types/DishType';
 
 export const Search: React.FC = () => {
-  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef<HTMLButtonElement>(null);
 
-  const {dishes} = hooks.useGetDishes();
+  const { dishes } = hooks.useGetDishes();
 
-  const categories = dishes
-    ? Array.from(new Set(dishes.map((dish: DishType) => dish.category)))
-    : [];
+  console.warn(dishes)
+
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () =>
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+    setIsMobile(check());
+  }, []);
 
   const renderHeader = () => {
     return (
@@ -26,66 +32,85 @@ export const Search: React.FC = () => {
     );
   };
 
-  const renderCategories = () => {
+  const renderSearch = () => {
     return (
-      <div style={{marginBottom: 30}}>
-        <Swiper
-          spaceBetween={10}
-          slidesPerView={'auto'}
-          pagination={{clickable: true}}
-          mousewheel={true}
+      <button
+        ref={searchInputRef}
+        style={{
+          backgroundColor: constants.colors.whiteColor,
+          width: '100%',
+          borderRadius: 10,
+          display: 'flex',
+          alignItems: 'center',
+          height: 50,
+          paddingLeft: 20,
+          cursor: 'pointer',
+          position: 'fixed',
+          top: constants.sizes.headerHeight + 10,
+          zIndex: 10000,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          maxWidth: isMobile
+            ? 'calc(100% - 40px)'
+            : constants.sizes.screenWidth - 40,
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          const result = window.prompt('Enter your search query', searchQuery);
+          if (result !== null) {
+            setSearchQuery(result);
+          }
+        }}
+        type="button"
+      >
+        <span
           style={{
-            paddingLeft: 20,
+            fontSize: 14,
+            lineHeight: 1.5,
+            marginRight: 'auto',
             paddingRight: 20,
-            paddingTop: 18,
+            color: searchQuery
+              ? constants.colors.mainDarkColor
+              : constants.colors.textColor,
           }}
         >
-          {categories?.map((category: any) => {
-            return (
-              <SwiperSlide key={category.id} style={{width: 'auto'}}>
-                <button
-                  style={{
-                    borderRadius: 5,
-                    padding: 10,
-                    userSelect: 'none',
-                    backgroundColor: constants.colors.whiteColor,
-                    marginBottom: 8,
-                    ...constants.flex.columnCenterCenter,
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    router.push(
-                      `/shop-category/${encodeURIComponent(category)}`
-                    );
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: 14,
-                      textAlign: 'center',
-                      fontWeight: 600,
-                      color: constants.colors.textColor,
-                    }}
-                  >
-                    {category}
-                  </span>
-                </button>
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-      </div>
+          {searchQuery || 'Search dishes...'}
+        </span>
+        {/* clear text */}
+        {searchQuery && (
+          <div
+            style={{
+              position: 'absolute',
+              right: 20,
+              cursor: 'pointer',
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              setSearchQuery('');
+            }}
+          >
+            <span>clear</span>
+          </div>
+        )}
+      </button>
     );
   };
 
-  const renderRecomended = () => {
+  const renderContent = () => {
+    const filteredDishes = dishes.filter((dish: DishType) => {
+      return dish.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+
     return (
-      <section>
-        <components.BlockHeading
-          title="Popular Dishes"
-          href={'/shop/popular'}
-          containerStyle={{marginBottom: 16}}
-        />
+      <section style={{
+        overflowY: 'auto',
+        marginTop: constants.sizes.headerHeight + 70,
+        marginBottom: constants.sizes.tabBarHeight,
+        paddingTop: 20,
+        paddingBottom: 20,
+      }}>
         <ul
           style={{
             ...constants.flex.flexColumn,
@@ -94,29 +119,17 @@ export const Search: React.FC = () => {
             gap: 14,
           }}
         >
-          {dishes
-            ?.filter((dish: DishType) => dish.isPopular)
-            .map((dish: DishType) => {
-              return <items.PopularItem dish={dish} key={dish.id} />;
-            })}
+          {filteredDishes.length > 0 ? (
+            filteredDishes.map((dish: DishType) => {
+              return <items.RecommendedItem dish={dish} key={dish.id} />;
+            })
+          ) : (
+            <p style={{ textAlign: 'center', color: constants.colors.textColor, marginTop: 20 }}>
+              Menu "{searchQuery}" tidak ditemukan.
+            </p>
+          )}
         </ul>
       </section>
-    );
-  };
-
-  const renderContent = () => {
-    return (
-      <main
-        style={{
-          marginTop: constants.sizes.headerHeight,
-          height: '100%',
-          overflowY: 'auto',
-          marginBottom: constants.sizes.tabBarHeight,
-        }}
-      >
-        {renderCategories()}
-        {renderRecomended()}
-      </main>
     );
   };
 
@@ -128,6 +141,7 @@ export const Search: React.FC = () => {
     <components.MotionWrapper>
       <components.SafeAreaView>
         {renderHeader()}
+        {renderSearch()}
         {renderContent()}
         {renderBottomBar()}
         <components.SafeAreaInsetBottom />

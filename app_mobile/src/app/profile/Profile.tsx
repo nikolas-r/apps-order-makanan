@@ -50,10 +50,10 @@ export const Profile: React.FC = () => {
               marginBottom: 2,
             }}
           >
-            Kristin Watson
+            Nikolas Reinald
           </h4>
           <span style={{fontSize: 14, color: constants.colors.textColor}}>
-            kristinwatson@mail.com
+            nikolasreinald@gmail.com
           </span>
         </button>
         <div style={{...constants.flex.flexColumn, gap: 23}}>
@@ -61,12 +61,6 @@ export const Profile: React.FC = () => {
             title="Order History"
             icon={<svg.CalendarSvg />}
             to={constants.routes.orderHistory}
-            description="Review Your Order History"
-          />
-          <items.ProfileMenuItem
-            title="My Promocodes"
-            icon={<svg.GiftSvg />}
-            to={constants.routes.myPromocodes}
             description="Review Your Order History"
           />
           <items.ProfileMenuItem

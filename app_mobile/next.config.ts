@@ -11,6 +11,17 @@ const nextConfig: NextConfig = {
     unoptimized: true,
     domains: ['http://localhost:3001'],
   },
+
+  imagesCloudinary: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com', // Izinkan gambar dari Cloudinary
+        pathname: '/**', // Izinkan semua folder di dalam Cloudinary Anda
+      },
+    ],
+  },
+
 };
 
 module.exports = withPWA(nextConfig);

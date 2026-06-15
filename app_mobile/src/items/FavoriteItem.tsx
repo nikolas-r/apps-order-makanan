@@ -27,7 +27,7 @@ export const FavoriteItem: React.FC<Props> = ({dish}) => {
       }}
     >
       <img
-        src={dish.image}
+        src={dish.img}
         alt={dish.name}
         style={{width: 73, height: 73, borderRadius: 5}}
       />
@@ -42,10 +42,6 @@ export const FavoriteItem: React.FC<Props> = ({dish}) => {
           {dish.ingredients?.join(', ') || 'No ingredients'}
         </p>
         <div style={{...constants.flex.rowAlignCenter, gap: 4}}>
-          <svg.StarFrSvg />
-          <span style={{fontSize: 14, color: constants.colors.titlesColor}}>
-            {typeof dish.rating === 'number' ? dish.rating.toFixed(1) : '—'}
-          </span>
         </div>
       </div>
       <svg.RightArrowSvg />

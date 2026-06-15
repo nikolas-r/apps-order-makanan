@@ -13,7 +13,6 @@ type Props = {
   showSkip?: boolean;
   showBasket?: boolean;
   showGoBack?: boolean;
-  showBurger?: boolean;
   titleStyle?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
 };
@@ -65,7 +64,7 @@ export const Header: React.FC<Props> = ({
         }}
       >
         <img
-          src={'https://george-fx.github.io/yummer-data/avatars/01.jpg'}
+          src={'https://tse3.mm.bing.net/th/id/OIP.INLvb-o0kn0nLl4vn6ATtgHaHa?pid=Api&h=220&P=0'}
           alt="User"
           style={{width: 24, height: 24, borderRadius: '50%'}}
         />
@@ -152,7 +151,7 @@ export const Header: React.FC<Props> = ({
               fontWeight: 600,
             }}
           >
-            ${total > 0 ? total.toFixed(2) : '0'}
+            {total > 0 ? total.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) : '0'}
           </span>
         </div>
         <svg.ShoppingBagSvg />

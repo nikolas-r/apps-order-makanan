@@ -1,11 +1,13 @@
 'use client';
 
+import axios from 'axios';
 import {useRouter} from 'next/navigation';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {hooks} from '@/hooks';
 import {constants} from '@/constants';
 import {components} from '@/components';
+import {useAppSelector} from '@/lib/store';
 
 export const Checkout: React.FC = () => {
   hooks.useThemeColor('#EEF3FC');
@@ -13,8 +15,12 @@ export const Checkout: React.FC = () => {
 
   const router = useRouter();
   const [buttonSectionHeight, setButtonSectionHeight] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const buttonRef = useRef<HTMLDivElement>(null);
+  
+  const cart = useAppSelector((state) => state.cart.list);
+  const total = useAppSelector((state) => state.cart.total);
 
   useEffect(() => {
     if (buttonRef.current) {
@@ -31,8 +37,40 @@ export const Checkout: React.FC = () => {
     cvv: '',
   });
 
-  const handlePlaceOrder = () => {
-    router.push(constants.routes.OrderSuccess);
+  const handlePlaceOrder = async () => {
+    if (!form.fullName) {
+      alert("Mohon isi Nama Anda.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const orderDishes = cart.map((item: any) => ({
+        name: item.name, 
+        quantity: item.quantity || 1, 
+        price: item.price,
+      }));
+
+      const orderData = {
+        customerName: form.fullName,
+        dishes: orderDishes,
+        totalPrice: total
+      };
+
+      const response = await axios.post('/api/orders', orderData);
+
+      if (response.data.success) {
+        router.push(constants.routes.OrderSuccess);
+      } else {
+        alert("Gagal menyimpan pesanan.");
+      }
+    } catch (error) {
+      console.error("Error Axios:", error);
+      alert("Terjadi kesalahan jaringan saat memproses pesanan Anda.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderHeader = () => {
@@ -48,19 +86,19 @@ export const Checkout: React.FC = () => {
         <div style={{...constants.flex.flexColumn, gap: 20}}>
           <components.Input
             label="Name"
-            placeholder="Kristin Watson"
+            placeholder="Nikolas Reinald"
             value={form.fullName}
             onClickAction={() => handleChangeField('fullName', 'fullName')}
           />
           <components.Input
             label="Address"
-            placeholder="8000 S Kirkland Ave, Chicago, IL 6065..."
+            placeholder="Jl. Margonda Raya No.358, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16423"
             value={form.address}
             onClickAction={() => handleChangeField('address', 'address')}
           />
           <components.Input
             label="Phone Number"
-            placeholder="+17123456789"
+            placeholder="+62 812-3456-7890"
             value={form.phoneNumber}
             onClickAction={() =>
               handleChangeField('phoneNumber', 'phoneNumber')
@@ -116,9 +154,9 @@ export const Checkout: React.FC = () => {
         }}
       >
         <components.Button
-          label="Place Order"
+          label={isSubmitting ? "Processing..." : "Place Order"}
           onClickAction={() => {
-            handlePlaceOrder();
+            if (!isSubmitting) handlePlaceOrder();
           }}
         />
       </div>
@@ -146,7 +184,6 @@ export const Checkout: React.FC = () => {
     <components.MotionWrapper>
       <components.SafeAreaView>
         {renderHeader()}
-
         {renderContent()}
         {renderButton()}
       </components.SafeAreaView>

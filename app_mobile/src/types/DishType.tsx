@@ -4,14 +4,9 @@ export type DishType = {
   name: string;
   description: string;
   price: number;
-  category: any;
-  type: 'food' | 'drink';
-  cookingTime: number;
   weight: string;
   isAvailable: boolean;
-  image: string;
+  img: string;
   quantity?: number;
   ingredients?: string[];
-  isPopular?: boolean;
-  isRecommended?: boolean;
 };

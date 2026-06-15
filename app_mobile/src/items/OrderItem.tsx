@@ -41,7 +41,7 @@ export const OrderItem: React.FC<Props> = ({dish}) => {
         }}
       >
         <img
-          src={dish.image}
+          src={dish.img}
           alt={dish.name}
           style={{
             width: 73,
@@ -71,7 +71,7 @@ export const OrderItem: React.FC<Props> = ({dish}) => {
           {dish.name}
         </h5>
         <span style={{fontSize: 14, fontWeight: 600, marginBottom: 6}}>
-          ${dish.price.toFixed(2)}
+          {dish.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
         </span>
         <div
           style={{

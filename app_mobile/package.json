@@ -12,6 +12,7 @@
     "@ducanh2912/next-pwa": "^10.2.9",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.11.0",
+    "mongoose": "^9.6.2",
     "motion": "^12.23.11",
     "next": "15.4.4",
     "react": "19.1.0",

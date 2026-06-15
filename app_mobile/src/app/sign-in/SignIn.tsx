@@ -53,7 +53,7 @@ export const SignIn: React.FC = () => {
         </h1>
         <components.Input
           containerStyle={{marginBottom: 30}}
-          placeholder="kristinwatson@mail.com"
+          placeholder="nikolasreinald@gmail.com"
           value={form.email}
           label="Email"
           onClickAction={() => handleChangeField('email', 'email')}

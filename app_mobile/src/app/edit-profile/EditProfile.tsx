@@ -41,7 +41,7 @@ export const EditProfile: React.FC = () => {
           }}
         >
           <img
-            src="https://george-fx.github.io/yummer-data/avatars/01.jpg"
+            src="https://tse3.mm.bing.net/th/id/OIP.INLvb-o0kn0nLl4vn6ATtgHaHa?pid=Api&h=220&P=0"
             alt="User Avatar"
             style={{width: '100%', height: '100%', borderRadius: '50%'}}
           />
@@ -67,23 +67,23 @@ export const EditProfile: React.FC = () => {
           <li>
             <components.Input
               label="Name"
-              placeholder="Kristin Watson"
+              placeholder="Nikolas Reinald"
               value={form.fullName}
               onClickAction={() => handleChangeField('fullName', 'Full Name')}
             />
           </li>
           <li>
             <components.Input
-              label="Email"
-              placeholder="kristinwatson@mail.com"
+              label="Phone Number"
+              placeholder="+62 812-3456-7890"
               value={form.phone}
               onClickAction={() => handleChangeField('phone', 'Phone Number')}
             />
           </li>
           <li>
             <components.Input
-              label="Phone Number"
-              placeholder="Enter date of birth"
+              label="Date of Birth"
+              placeholder="Enter your date of birth"
               value={form.dateOfBirth}
               onClickAction={() =>
                 handleChangeField('dateOfBirth', 'Date of Birth')
@@ -93,7 +93,7 @@ export const EditProfile: React.FC = () => {
           <li>
             <components.Input
               label="Location"
-              placeholder="Chicago, USA"
+              placeholder="Depok, Indonesia"
               value={form.address}
               onClickAction={() => handleChangeField('address', 'Location')}
             />
